@@ -17,7 +17,10 @@ def login():
         if user is not None:
             login_user(user, duration=datetime.timedelta(minutes=1))
             session.permanent = True
-            return make_response(jsonify({"message": "succesfull login"}), 200)
+            response = make_response(jsonify({"message": "succesfull login"}), 200)
+            response.headers["Access-Control-Allow-Headers"] = "*"
+            response.headers["Access-Control-Expose-Headers"] = "*"
+            return response
         else:
             return make_response(
                 jsonify({"message": "wrong password or username"}), 203
